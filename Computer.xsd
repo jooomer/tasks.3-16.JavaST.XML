@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+<!--
+************************************* definition of simple elements *************************************
+-->
+<xs:element name="devicename" type="xs:string"/>
+<xs:element name="name" type="xs:string"/>
+<xs:element name="origin" type="xs:string"/>
+<xs:element name="peripheral" type="xs:string"/>
+<xs:element name="cooler" type="xs:string"/>
+<xs:element name="componentsgroup" type="xs:string"/>
+<xs:element name="critical" type="xs:string"/>
+
+<xs:element name="port">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">						<!-- set enumeration value -->
+			<xs:enumeration value="USB"/>
+			<xs:enumeration value="LPT"/>
+			<xs:enumeration value="COM"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+			
+
+<!--
+************************************* definition of attributes *************************************
+-->
+<xs:attribute name="currency" type="xs:string"/>
+<xs:attribute name="power" type="xs:string"/>
+
+<xs:attribute name="id" type="idType"/>
+<xs:simpleType name="idType">
+	<xs:restriction base="xs:string">
+		<xs:pattern value="[0-9]{2}"/>								<!-- set pattern for id -->
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:attribute name="deviceId" type="deviceIdType"/>
+<xs:simpleType name="deviceIdType">
+	<xs:restriction base="xs:string">
+		<xs:pattern value="[A-Z]{1}[a-z]{4}-[0-9]{5}"/>				<!-- set pattern for id -->
+	</xs:restriction>
+</xs:simpleType>
+
+
+<!--
+************************************* definition of complex elements *************************************
+-->
+<xs:element name="price">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="PriceBaseType">
+				<xs:attribute ref="currency" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:element>
+<xs:simpleType name="PriceBaseType">
+	<xs:restriction base="xs:float">								<!-- set value from 0 to n -->
+		<xs:minInclusive value="0"/>
+		<xs:maxInclusive value="1000"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:element name="Ports">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element ref="port" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:element name="Type">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element ref="peripheral"/>
+			<xs:element ref="powerconsumption"/>
+			<xs:element ref="cooler"/>
+			<xs:element ref="componentsgroup"/>
+      		<xs:any minOccurs="0"/>
+<!--		<xs:element ref="Ports"/>	-->			
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:element name="powerconsumption">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="powerconsumptionBaseType">
+				<xs:attribute ref="power" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:element>
+<xs:simpleType name="powerconsumptionBaseType">
+	<xs:restriction base="xs:positiveInteger">
+		<xs:maxInclusive value="1000"/>								<!-- set maximum value -->
+	</xs:restriction>
+</xs:simpleType>
+
+<xs:element name="Component">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element ref="name"/>
+			<xs:element ref="origin"/>
+			<xs:element ref="price"/>
+			<xs:element ref="Type"/>
+			<xs:element ref="critical"/>
+		</xs:sequence>
+		<xs:attribute ref="id" use="required"/>
+	</xs:complexType>
+</xs:element>
+
+<xs:element name="Components">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element ref="Component"/>
+			<xs:any minOccurs="0"/>
+		</xs:sequence>	
+	</xs:complexType>
+</xs:element>
+
+<xs:element name="Device">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element ref="devicename"/>
+			<xs:element ref="Components"/>			
+		</xs:sequence>
+		<xs:attribute ref="deviceId" use="required"/>
+	</xs:complexType>
+</xs:element>
+
+</xs:schema>

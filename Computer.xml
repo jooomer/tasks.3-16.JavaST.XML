@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Device deviceId="Cmptr-12345"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="computer.xsd">
+	<devicename>Computer</devicename>
+	<Components>
+			<Component id="11">
+				<name>System Unit</name>
+				<origin>USA</origin>
+				<price currency="USD">300.0</price>
+				<Type>
+					<peripheral>No</peripheral>
+					<powerconsumption power="W">300</powerconsumption>
+					<cooler>Yes</cooler>
+					<componentsgroup>Input/Output</componentsgroup>
+					<Ports>
+						<port>COM</port>
+						<port>USB</port>
+						<port>USB</port>
+					</Ports>
+				</Type>
+				<critical>Yes</critical>
+			</Component>
+			<Component id="12">
+				<name>Monitor</name>
+				<origin>South Korea</origin>
+				<price currency="USD">150.0</price>
+				<Type>
+					<peripheral>Yes</peripheral>
+					<powerconsumption power="W">20</powerconsumption>
+					<cooler>Yes</cooler>
+					<componentsgroup>Input/Output</componentsgroup>
+				</Type>
+				<critical>Yes</critical>
+			</Component>
+	</Components>
+</Device>
